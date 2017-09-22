@@ -15,30 +15,31 @@ function searchName() {
         });
     });
 
-}
 
-// add send and receive message mechanism
-"use strict";
 
-function onError(error) {
-  console.error(`Error: ${error}`);
-}
+  // add send and receive message mechanism
 
-function sendMessageToTabs(tabs) {
-  for (let tab of tabs) {
-    browser.tabs.sendMessage(
-      tab.id,
-      {greeting: "Hi from background script"}
-    ).then(response => {
-      console.log("Message from the content script:");
-      console.log(response.response);
-    }).catch(onError);
+  function onError(error) {
+    console.error(`Error: ${error}`);
   }
-}
 
-browser.browserAction.onClicked.addListener(() => {
-  browser.tabs.query({
-    currentWindow: true,
-    active: true
-  }).then(sendMessageToTabs).catch(onError);
-});
+  function sendMessageToTabs(tabs) {
+    for (let tab of tabs) {
+      browser.tabs.sendMessage(
+        tab.id,
+        browser.tabs.sendMessage.addListener() // send message to the content script
+      ).then(response => {
+        browser.tabs.onMessage.addListener(); // here we receive the message from content
+        console.log(response.response);
+      }).catch(onError);
+    }
+  }
+
+  browser.browserAction.onClicked.addListener(() => {
+    browser.tabs.query({
+      currentWindow: true,
+      active: true
+    }).then(sendMessageToTabs).catch(onError);
+  });
+
+}
