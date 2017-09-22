@@ -1,0 +1,27 @@
+/* Socials style */
+
+html, body {
+    width: 200px;
+    height: 600px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
+  .button {
+    margin: 3% auto;
+    padding: 4px;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+  .social:hover {
+    background-color: green;
+    color: white;
+  }
+
+  .clear:hover {
+    background-color: red;
+    color: white;
+  }
+  
