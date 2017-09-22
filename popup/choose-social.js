@@ -31,6 +31,7 @@ function socialNameUrl(socialName) {
         file: "./background-scripts/jquery.min.js"
       });
   
+      // send message
       var gettingActiveTab = browser.tabs.query({active: true, currentWindow: true});
       gettingActiveTab.then((tabs) => {
         browser.tabs.sendMessage(tabs[0].id, {socialUrl: chosenSocialUrl});
