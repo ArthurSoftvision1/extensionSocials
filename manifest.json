@@ -1,0 +1,45 @@
+{
+    "manifest_version": 2,
+    "name": "Socials",
+    "version": "1.0",
+
+    "description": "List with social links",
+    "icons": {
+        "48": "icons/text.png"
+    },
+
+    "permissions": [
+        "activeTab"
+    ],
+
+    "browser_action": {
+        "default_icon": "icons/text.png",
+        "default_title": "Socials",
+        "default_popup": "popup/choose-social.html"
+    },
+
+    "web_accessible_resources": [
+        "icons/facebook-icon.png",
+        "icons/icon_google.png",
+        "icons/instagram-micro.png",
+        "icons/linkedin-icon.png",
+        "icons/social_youtube.png",
+        "icons/twitter-icon.png"
+    ],
+
+    "background": {
+        "scripts": [
+            "background-scripts/jquery.min.js",
+            "background-scripts/background.js"
+        ]
+    },
+   
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": [
+                "content_scripts/content-script.js" 
+            ]
+        }
+    ]
+}
