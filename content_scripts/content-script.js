@@ -28,38 +28,19 @@ function addInput() {
   var value = document.getElementById('search-input').value;
 }
 
-// function onChange() {
-//    // event handler for change input text
+function onChange() {
+   // event handler for change input text
+    var search = document.getElementById('search').value; // get the input value
+}
 
-//       var search = document.getElementById('search').value;
-
-
-//       var xhttp = new XMLHttpRequest(); // create the xhttp object
-//       xhttp.onreadystatechange = function() { // check the state change
-//           if (this.readyState === 4 && this.status === 200) {
-//               // check the state and the status
-//               let data = JSON.parse(this.responseText);
-//               document.getElementById('results').textContent = data.results; // display the http response using innerHTML function 
-//               // document.getElementById('results').appendChild(document.createTextNode(data.results)); // display the http response using innerHTML function
-//           };
-//       };
-
-//       xhttp.open("GET", "http://carcompanion.16mb.com/backend/script.php?q=" + search, true); // open 
-//       xhttp.send(); // send
-
-  
-// }
-
-// document.getElementById('button').addEventListener('click', onChange, false);
-
-// add send message mechanism
+var button = document.getElementById('button');
+button.addEventListener('click', onChange, false);
 
 function addResponseToPage() {
   // adds response ajax call to the page using jQuery
-  "use strict";
   
   browser.runtime.onMessage.addListener(request => {
-    console.log("Message from the background script:");
+    browser.runtime.onMessage.addListener(social);
     console.log(request.greeting);
     return Promise.resolve({response: "Hi from content script"});
   });
@@ -75,4 +56,8 @@ function insertSocial(socialUrl) { // here we insert the social image
 }
 
 
-browser.runtime.onMessage.addListener(social); // add social listener function
+browser.runtime.sendMessage.addListener(social); // add social listener function
+
+addInput();
+onChange();
+addResponseToPage();
