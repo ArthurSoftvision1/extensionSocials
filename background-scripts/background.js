@@ -1,31 +1,18 @@
-function searchName(sendResponse) {
-    
-    // $(document).ready(function(){
-        // $("#button").click(function(){
-            var inputData = sendResponse.input;
-        
-            $.ajax({
-                type: 'GET',
-                url: "http://carcompanion.16mb.com/backend/script.php?q=" + inputData, 
-                success: function(getData){
-                  ;
-                  
+function searchName(request, sender, sendResponse) {
+  var answerToContent = request.msgToBackground; // receive the message with input value
 
+  var url = "http://carcompanion.16mb.com/backend/script.php?q=";
 
-                  browser.tabs.executeScript(null, {file:"./content_scripts/content-script.js"})
-                  
-                  var gettingActiveTab = browser.tabs.query({active: true, currentWindow: true});
-                  gettingActiveTab.then((tabs) => {
-                    browser.runtime.sendMessage({'social': getData.results});
-                  });
+  $.getJSON(url+answerToContent, function(data) {
+    console.log(data);
+    var gettingActiveTab = browser.tabs.query({active: true, currentWindow: true});
 
-                  // $('#results').text(getData);
-            
-            }});
-  function onError(error) {
-    console.error(`Error: ${error}`);
-  }
-
+    gettingActiveTab.then((tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, {answerToContent : data.results}); // send message with answer to content script
+    });
+  })
 }
 
-browser.runtime.onMessage.addListener(searchName); // receive message
+browser.runtime.onMessage.addListener(searchName) // call the searchName function
+
+
