@@ -1,45 +1,31 @@
-function searchName() {
+function searchName(sendResponse) {
     
-    $(document).ready(function(){
-        $("#button").click(function(){
-
-            var search = $('#search').val();
+    // $(document).ready(function(){
+        // $("#button").click(function(){
+            var inputData = sendResponse.input;
         
             $.ajax({
                 type: 'GET',
-                url: "http://carcompanion.16mb.com/backend/script.php?q=" + search, 
-                success: function(data){
-           
-                $("#results").text(data);
+                url: "http://carcompanion.16mb.com/backend/script.php?q=" + inputData, 
+                success: function(getData){
+                  ;
+                  
+
+
+                  browser.tabs.executeScript(null, {file:"./content_scripts/content-script.js"})
+                  
+                  var gettingActiveTab = browser.tabs.query({active: true, currentWindow: true});
+                  gettingActiveTab.then((tabs) => {
+                    browser.runtime.sendMessage({'social': getData.results});
+                  });
+
+                  // $('#results').text(getData);
+            
             }});
-        });
-    });
-
-
-
-  // add send and receive message mechanism
-
   function onError(error) {
     console.error(`Error: ${error}`);
   }
 
-  function sendMessageToTabs(tabs) {
-    for (let tab of tabs) {
-      browser.tabs.sendMessage(
-        tab.id,
-        browser.tabs.sendMessage.addListener() // send message to the content script
-      ).then(response => {
-        browser.tabs.onMessage.addListener(); // here we receive the message from content
-        console.log(response.response);
-      }).catch(onError);
-    }
-  }
-
-  browser.browserAction.onClicked.addListener(() => {
-    browser.tabs.query({
-      currentWindow: true,
-      active: true
-    }).then(sendMessageToTabs).catch(onError);
-  });
-
 }
+
+browser.runtime.onMessage.addListener(searchName); // receive message
