@@ -12,12 +12,6 @@
         "activeTab"
     ],
 
-    "browser_action": {
-        "default_icon": "icons/text.png",
-        "default_title": "Socials",
-        "default_popup": "popup/choose-social.html"
-    },
-
     "web_accessible_resources": [
         "icons/facebook-icon.png",
         "icons/icon_google.png",
