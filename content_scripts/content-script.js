@@ -6,7 +6,6 @@ function social(request, sender, sendResponse) {
   backgroundAnswer.textContent = request.answerToContent; // put the answer in results ID
 }
 
-
 function addInput() {
   // adds input text to the page
 
@@ -54,7 +53,3 @@ getDiv.style.width = "268px";
 getDiv.style.height = "105px";
 
 browser.runtime.onMessage.addListener(social); // call social function
-
-
-
-
